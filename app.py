@@ -39,7 +39,7 @@ uploaded_file = st.file_uploader("📂 Upload file CSV Direktori Usaha", type=["
 if uploaded_file is not None:
     @st.cache_data
     def load_data(file):
-        df = pd.read_csv(file, dtype={'idsbr': str})
+        df = pd.read_csv(file, dtype={'idsbr': str}, low_memory=False)
         if 'gcs_result' in df.columns:
             df = df[df['gcs_result'].astype(str) != '4'].copy()
         return df
@@ -191,4 +191,5 @@ if uploaded_file is not None:
                     data=buffer.getvalue(),
                     file_name=f'kandidat_ganda_{pilih_kec}_{pilih_desa}.xlsx',
                     mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+
                 )
